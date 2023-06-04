@@ -3,3 +3,5 @@
 
 //La funcion verifica y decodifica el token
 // Si da error, retorna nulo.
+
+//Estas funciones se usan en validate-token y en el login
