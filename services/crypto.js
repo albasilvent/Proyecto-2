@@ -1,6 +1,5 @@
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
-const jwt= require("jsonwebtoken");
 
 
 //Funcion para hashear la contraseña
@@ -38,3 +37,12 @@ function generateUUID() {
     let uuid = crypto.randomUUID();
     return uuid;
 }
+
+//Exportamos las funciones
+
+module.exports = {
+    hashPassword,
+    validatePassword,
+    generateValidationCode,
+    generateUUID,
+};
