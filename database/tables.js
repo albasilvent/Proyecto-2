@@ -66,4 +66,5 @@ async function createTables(pool) {
           FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
       )`);
   }
+  
   module.exports = { createTables };
