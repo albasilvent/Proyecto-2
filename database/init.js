@@ -5,3 +5,5 @@
 //Creamos la variable pool
 //Creamos una funcion "getDB". Si la pool no existe, la crea
 //Si existe: return await pool.getConnection();
+
+createTables();
