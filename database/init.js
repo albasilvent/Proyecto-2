@@ -1,6 +1,5 @@
 //Conectar la base de datos
 //Requerimos la funcion de init.js y la llamamos getDb.
-
 require("dotenv").config();
 const cryptoService = require("../services/crypto.js");
 const { createPool } = require("./connection.js");
