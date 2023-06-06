@@ -1,5 +1,4 @@
 //Iniciar la base de datos (conseguir la conexion)
-
 const mysql2 = require("mysql2/promise");
 
 let pool = null;
@@ -19,3 +18,8 @@ function getConnection() {
   }
   return pool;
 }
+
+module.exports = {
+  createPool,
+  getConnection,
+};
