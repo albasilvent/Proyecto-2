@@ -1,11 +1,12 @@
 //Funciones de errores
+
 //invalidCredentials
 //Funcion si las credenciales son invalidas
 function invalidCredentials() {
     throw {
         status: 400, //Bad Request
         code: "INVALID_CREDENTIALS",
-        message: "Credenciales inválidas",
+        message: "Las credenciales son inválidas",
     };
 }
 
@@ -15,7 +16,7 @@ function emailNotValidated() {
     throw {
         status: 400, //Bad Request
         code: "EMAIL_NOT_VALIDATED",
-        message: "El email de este usuario aún no ha sido validado",
+        message: "El email no ha sido validado",
     };
 }
 //notAuthenticated
@@ -33,7 +34,7 @@ function unauthorizedUser() {
     throw {
         status: 403, //403 Forbidden
         code: "UNAUTHORIZED",
-        message: "El usuario no está autorizado para hacer esta operación",
+        message: "El usuario no está autorizado para hacer esta acción",
     };
 }
 //didNotAcceptTOS
@@ -52,7 +53,7 @@ function notFound() {
     throw {
         status: 404, //NOT FOUND
         code: "RESOURCE_NOT_FOUND",
-        message: "El recurso requerido no existe",
+        message: "El recurso no existe",
     };
 }
 //emailAlreadyRegistered
@@ -79,7 +80,7 @@ function sendError(res, err){
         success: false,
         error: {
             code: err.code ?? "UNEXPECTED_ERROR",
-            msg: err.message ?? "An unexpected error ocurred",
+            msg: err.message ?? "Ha ocurrido un error inesperado",
         },
     });
 };

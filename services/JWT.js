@@ -29,7 +29,6 @@ function parseJWT(token){
     }
 }
 
-
 //Estas funciones se usan en validate-token y en el login
 //Exportamos
 
