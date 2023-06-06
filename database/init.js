@@ -28,3 +28,7 @@ initDB();
 //Metemos la funcion de crearInserts
 //Metemos la funcion de crearData
 //Cerramos la conexion ???????
+
+//Creamos la variable pool
+//Creamos una funcion "getDB". Si la pool no existe, la crea
+//Si existe: return await pool.getConnection();
