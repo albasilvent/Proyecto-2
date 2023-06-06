@@ -23,6 +23,8 @@ async function validatePassword(password, hash){
 //Generar un numero para validar emails
 //se usa en el registro
 
+//ESTO ES EXTRA
+
 function generateValidationCode() {
     let validationCode = crypto.randomInt(100000, 999999);
     return validationCode;
