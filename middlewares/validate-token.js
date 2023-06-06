@@ -6,13 +6,13 @@
 //Ejecuta el siguiente middleware
 //Se ejecuta en todas las rutas
 
-const cryptoService = require("../services/crypto.js");
+const { parseJWT } = require("../services/JWT");
 
-module.exports = (req, res, next) => {
+function validateToken(req, res, next) {
   const token = req.headers.authorization;
 
   if (token) {
-    const user = cryptoService.parseJWT(token);
+    const user = parseJWT(token);
     if (user) {
       req.currentUser = user;
     } else {
@@ -23,3 +23,5 @@ module.exports = (req, res, next) => {
   }
   next();
 };
+
+module.exports= {validateToken};
