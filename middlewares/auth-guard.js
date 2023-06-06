@@ -1,12 +1,14 @@
 //Saber si esta registrado. Si esta registrado, deja pasar. Si no, salta un error.
 //Se usa en las rutas que no sean get.
+const { notAuthenticated } = require("../services/errors");
 
-const errorService = require("../services/errors.js");
 
-module.exports = (req, res, next) => {
+function authGuard (req, res, next) {
   if (!req.currentUser) {
-    errorService.notAuthenticated();
+    notAuthenticated();
   } else {
     next();
   }
-};
+}
+
+module.exports= {authGuard};
