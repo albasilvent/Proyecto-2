@@ -1,5 +1,4 @@
 //Usamos mailjet
-
 const mailjet = require("node-mailjet").apiConnect(
     `${process.env.MJ_APIKEY_PUBLIC}`,
     `${process.env.MJ_APIKEY_PRIVATE}`
@@ -41,6 +40,8 @@ async function sendEmail (emailTo, name, validationCode) {
     }
 
 module.exports = {sendEmail};
+
+sendEmail("crlsgscnls41@gmail.com", "Carlos", 143274829);
 
 //Estas funciones se usan en register-user
 
