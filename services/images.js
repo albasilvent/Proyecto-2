@@ -6,7 +6,7 @@ const sharp = require("sharp");
 //processUploadedPostPhoto
 //Funcion que guarda el archivo en el disco
 async function processUploadedPostPhoto(postId, photoId, photoFile) {
-const directory = path.join(__dirname, "../../public/photos", postId);  //Directorio donde guardamos la foto
+const directory = path.join(__dirname, "../public/photos", postId);  //Directorio donde guardamos la foto
 await fs.mkdir(directory, {  //Asegurarse de que el directorio exista
     recursive: true,
   });
@@ -35,8 +35,8 @@ return fileURL;
 
 //Funcion para borrar fotos
 async function deletePhoto(dbPhoto) {
-  const directory = path.join(__dirname, "../../public");
-  // /photos/{postId}/{photoId}.{extension}
+  const directory = path.join(__dirname, "../public");
+  
   const filePath = path.join(directory, dbPhoto.imageURL);
   await fs.unlink(filePath);
 }

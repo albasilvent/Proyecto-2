@@ -26,7 +26,10 @@ async function initDB() {
   await pool.query(`USE ${DATABASE_NAME}`);
 
   await createTables(pool);
+
   await insertAdminUsers(pool, DB_ADMIN_NAME, DB_ADMIN_SURNAME1,DB_ADMIN_SURNAME2,DB_ADMIN_EMAIL,DB_ADMIN_PASSWORD,DB_ADMIN_DATE);
+
+  //Podemos meter una funcion para añadir fake data
 
   await pool.end();
 }
