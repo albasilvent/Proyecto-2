@@ -17,9 +17,13 @@ function getConnection() {
     pool = createPool(MYSQL_DATABASE);
   }
   return pool;
+<<<<<<< HEAD
 }
 
 module.exports = {
   createPool,
   getConnection,
 };
+=======
+}
+>>>>>>> ec4f6c3d49ac5e2c1a7199fc0aae809910a16f7d
