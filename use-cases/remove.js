@@ -63,4 +63,4 @@ async function removePost (postId, userId) {
     removeComment,
     removePhoto,
     removePost,
-  }
+  };
