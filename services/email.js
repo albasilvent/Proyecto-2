@@ -41,7 +41,7 @@ async function sendEmail (emailTo, name, validationCode) {
 
 module.exports = {sendEmail};
 
-sendEmail("crlsgscnls41@gmail.com", "Carlos", 143274829);
+sendEmail("nescaruncho@gmail.com", "Andres", 143274829);
 
 //Estas funciones se usan en register-user
 
