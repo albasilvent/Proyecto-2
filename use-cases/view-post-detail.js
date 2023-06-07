@@ -6,15 +6,25 @@
 //Almacenamos los likes en post.likes con CountLikesByPostID
 //Retornamos post
 
-const { getPostById } = require("./database/funciones/post.js");
+const { getPostById } = require("../database/funciones/post.js");
+
+const { notFound } = require("../services/errors.js");
+
+const { getCommentsByPostId } = require("../database/funciones/comment.js");
+
+const { likesCountPost } = require("../database/funciones/like.js");
 
 
-  module.exports = async (postId) => {
-    const post = await dbFunction.getPostById(postId);
+  async function viewPost (postId) {
+    const post = await getPostById(postId);
     if (!post) {
-      errorService.notFound();
+      notFound();
     }
-    post.comments = await dbFunction.getCommentsByPostId(postId);
-    post.likes = await dbFunction.likesCountPost(postId);
+    post.comments = await getCommentsByPostId(postId);
+    post.likes = await likesCountPost(postId);
     return post;
+  };
+
+  module.exports = {
+    viewPost
   };

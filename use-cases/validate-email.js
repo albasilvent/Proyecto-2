@@ -6,21 +6,27 @@
 //Si es correcto, borramos el codigo de la base de datos con DeleteValidationCode
 //Actualizamos al usuario para que su emailValidated sea true con SetEmailValidated
 
-const { emailValidated } = require("./database/funciones/email.js");
+const { setEmailValidated, getValidationCodeByUserId, deleteValidationCode } = require("../database/funciones/email.js");
 
-const { emailNotValidated } = require("./services/errors.js");
+const { getUserByEmail } = require("../database/funciones/users.js");
 
-module.exports = async (email, userId) => {
+const  { notFound, invalidValidationCode } = require("../services/errors.js");
+
+async function validateEmail (email, userId) {
   const user = await getUserByEmail(email);
   if (!user) {
-    errorService.notFound();
+    notFound();
   }
-  const validationCode = await dbFunction.getValidationCodeByUserId(userId, code);
+  const validationCode = await getValidationCodeByUserId(userId, code);
 
   if (validationCode != code) {
-    errorService.invalidValidationCode();
+    invalidValidationCode();
   }
-  await dbFunction.deleteValidationCode(code);
+  await deleteValidationCode(code);
 
-  await dbFunction.setEmailValidated(userId);
+  await setEmailValidated(userId);
+};
+
+module.exports = {
+    validateEmail
 };
