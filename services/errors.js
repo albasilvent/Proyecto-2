@@ -75,7 +75,7 @@ function invalidValidationCode() {
     };
 }
 
-function sendError(res, err){
+function sendError(res, err) {
     res.status(err.status ?? 500).json({
         success: false,
         error: {
@@ -83,7 +83,17 @@ function sendError(res, err){
             msg: err.message ?? "Ha ocurrido un error inesperado",
         },
     });
-};
+}
+
+async function handleAsyncError(controllerFn) {
+    return async (req, res, next) => {
+        try {
+            await controllerFn(req, res);
+        } catch (error) {
+            next(error);
+        }
+    };
+}
 
 module.exports = {
     invalidCredentials,
@@ -94,5 +104,6 @@ module.exports = {
     notFound,
     emailAlreadyRegistered,
     invalidValidationCode,
-    sendError
+    sendError,
+    handleAsyncError,
 };

@@ -51,12 +51,12 @@ async function addPhoto(postId, userId, photo) {
 
     const url = await processUploadedPostPhoto(postId, id, photo);
 
-    const photo = {
+    const newPhoto = {
         id: generateUUID(),
         postId: postId,
         imgURL: url,
     };
-    await savePhoto(photo);
+    await savePhoto(newPhoto);
 }
 
 module.exports = {
