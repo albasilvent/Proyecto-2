@@ -3,11 +3,11 @@
 
 const { searchByTerm } = require("../database/funciones/post.js");
 
-async function search ({search})  {
+async function search({ search }) {
     const post = await searchByTerm(search);
     return post;
-};
+}
 
-module.export = {
-    search
+module.exports = {
+    search,
 };

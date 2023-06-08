@@ -14,17 +14,16 @@ const { getCommentsByPostId } = require("../database/funciones/comment.js");
 
 const { likesCountPost } = require("../database/funciones/like.js");
 
-
-  async function viewPost (postId) {
+async function viewPost(postId) {
     const post = await getPostById(postId);
     if (!post) {
-      notFound();
+        notFound();
     }
     post.comments = await getCommentsByPostId(postId);
     post.likes = await likesCountPost(postId);
     return post;
-  };
+}
 
-  module.exports = {
-    viewPost
-  };
+module.exports = {
+    viewPost,
+};
