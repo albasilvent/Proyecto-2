@@ -85,8 +85,8 @@ function sendError(res, err) {
     });
 }
 
-async function handleAsyncError(controllerFn) {
-    return async (req, res, next) => {
+function handleAsyncError(controllerFn) {
+    return async ( req, res, next) => {
         try {
             await controllerFn(req, res);
         } catch (error) {

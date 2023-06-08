@@ -5,7 +5,7 @@
 async function createTables(pool) {
     await pool.query(`
       CREATE TABLE users(
-          id CHAR(36) PRIMARY KEY,
+          id VARCHAR(100) PRIMARY KEY,
           name VARCHAR(150) NOT NULL,
           surname1 VARCHAR(150) NOT NULL,
           surname2 VARCHAR(150),
@@ -20,28 +20,28 @@ async function createTables(pool) {
 
     await pool.query(`
       CREATE TABLE posts(
-          id CHAR(36) PRIMARY KEY,
+          id VARCHAR(100) PRIMARY KEY,
           title VARCHAR(150) NOT NULL,
-          description TEXT NOT NULL UNIQUE,
-          userId CHAR(36) NOT NULL,
+          description TEXT NOT NULL,
+          userId VARCHAR(100) NOT NULL,
           createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
       )`);
 
     await pool.query(`
       CREATE TABLE post_likes(
-          id CHAR(36) PRIMARY KEY,
-          userId CHAR(36) NOT NULL,
-          postId CHAR(36) NOT NULL,
+          id VARCHAR(100) PRIMARY KEY,
+          userId VARCHAR(100) NOT NULL,
+          postId VARCHAR(100) NOT NULL,
           FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
           FOREIGN KEY (postId) REFERENCES posts(id) ON DELETE CASCADE
       )`);
 
     await pool.query(`
       CREATE TABLE post_comments(
-          id CHAR(36) PRIMARY KEY,
-          userId CHAR(36) NOT NULL,
-          postId CHAR(36) NOT NULL,
+          id VARCHAR(100) PRIMARY KEY,
+          userId VARCHAR(100) NOT NULL,
+          postId VARCHAR(100) NOT NULL,
           comment VARCHAR(300) NOT NULL,
           createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
@@ -50,8 +50,8 @@ async function createTables(pool) {
 
     await pool.query(`
       CREATE TABLE post_photos(
-          id CHAR(36) PRIMARY KEY,
-          postId CHAR(36) NOT NULL,
+          id VARCHAR(100) PRIMARY KEY,
+          postId VARCHAR(100) NOT NULL,
           imageURL VARCHAR(300) NOT NULL,
           createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (postId) REFERENCES posts(id) ON DELETE CASCADE
@@ -59,12 +59,12 @@ async function createTables(pool) {
 
     await pool.query(`
       CREATE TABLE validation_codes(
-          id CHAR(36) PRIMARY KEY,
-          userId CHAR(36) NOT NULL,
+          id VARCHAR(100) PRIMARY KEY,
+          userId VARCHAR(100) NOT NULL,
           code CHAR(8) NOT NULL,
           createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
       )`);
-  }
-  
-  module.exports = { createTables };
+}
+
+module.exports = { createTables };

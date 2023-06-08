@@ -4,7 +4,7 @@ require("dotenv").config();
 const cryptoService = require("../services/crypto.js");
 const { createPool } = require("./connection.js");
 const { createTables } = require("./tables.js");
-const { insertAdminUsers } = require("./adminUsers.js");
+//Añadir funcion de InserAdminUsers
 
 //Creamos una funcion. Dentro de la funcion creamos una variable
 //En esa variable almacenamos la llamada a la funcion
@@ -26,8 +26,6 @@ async function initDB() {
   await pool.query(`USE ${DATABASE_NAME}`);
 
   await createTables(pool);
-
-  await insertAdminUsers(pool, DB_ADMIN_NAME, DB_ADMIN_SURNAME1,DB_ADMIN_SURNAME2,DB_ADMIN_EMAIL,DB_ADMIN_PASSWORD,DB_ADMIN_DATE);
 
   //Podemos meter una funcion para añadir fake data
 

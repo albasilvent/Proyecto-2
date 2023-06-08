@@ -5,8 +5,9 @@ const db = getConnection();
 async function saveUser(user) {
     const statement = `
     INSERT INTO users(id,name,surname1,surname2,email,password,birthDate,country,acceptedTOS,emailValidated)
-    VALUES(?,?,?,?,?,?,?,?)
+    VALUES(?,?,?,?,?,?,?,?,?,?)
     `;
+
     await db.execute(statement, [
         user.id,
         user.name,

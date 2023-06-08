@@ -3,19 +3,19 @@
 //Usamos validate token y indexRouter
 //El resto no se que es, tengo que mirarlo
 require("dotenv").config();
+
 const path = require("path");
 const express = require("express");
-const indexRouter = require("./routes/index-router.js");
-const validateToken = require("./middlewares/validate-token.js");
-const sendError = require("./utils/send-error.js");
 const cors = require("cors");
+const indexRouter = require("./routes/index-router.js");
+const { validateToken } = require("./middlewares/validate-token.js");
+const { sendError } = require("./services/errors.js");
 
 const app = express();
 const PORT = 3000;
 
-app.listen(PORT, () => {
-    console.log(`Server iniciado en el puerto ${PORT}...`);
-});
+const staticDirectory = path.join(__dirname, "./public");
+app.use(express.static(staticDirectory));
 
 app.use(
     cors({
@@ -25,9 +25,6 @@ app.use(
 
 app.use(validateToken);
 app.use(indexRouter);
-
-const staticDirectory = path.join(__dirname, "../public");
-app.use(express.static(staticDirectory));
 
 app.use((err, req, res, next) => {
     console.error(err);
@@ -40,4 +37,8 @@ app.use((req, res, next) => {
         code: "UNKNOWN_ENDPOINT",
         message: `Endpoint desconocido: ${req.method} ${req.path}`,
     });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server iniciado en el puerto ${PORT}...`);
 });

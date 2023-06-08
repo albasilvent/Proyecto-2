@@ -1,4 +1,5 @@
 const { Router, json } = require("express");
+const { authGuard } = require("../middlewares/auth-guard.js");
 const { handleAsyncError } = require("../services/errors");
 const { listPosts } = require("../use-cases/list");
 const { search } = require("../use-cases/search");

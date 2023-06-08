@@ -1,5 +1,7 @@
 // post /posts/:id/like
 //Hacer toggle del like en el post
+const { Router } = require("express");
+const { authGuard } = require("../middlewares/auth-guard.js");
 const { handleAsyncError } = require("../services/errors");
 const { toggleLike } = require("../use-cases/like");
 const { sendResponse } = require("../services/response");

@@ -1,3 +1,4 @@
+const { Router } = require("express");
 const { authGuard } = require("../middlewares/auth-guard");
 const fileUpload = require("express-fileupload");
 const { handleAsyncError } = require("../services/errors");

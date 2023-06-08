@@ -1,9 +1,13 @@
+const { Router, json } = require("express");
+const { authGuard } = require("../middlewares/auth-guard.js");
 const { validateBody } = require("../middlewares/validate-body.js");
 const { validateEmailCode } = require("../use-cases/validate-email.js");
 const { handleAsyncError } = require("../services/errors.js");
 const { registerUser } = require("../use-cases/register.js");
 const { loginUser } = require("../use-cases/login.js");
 const { sendResponse } = require("../services/response.js");
+const registerPayload = require ("../validators/register.js");
+const loginPayload = require ("../validators/login.js");
 const router = Router();
 // post  "/users/register"
 //Registrar un usuario
