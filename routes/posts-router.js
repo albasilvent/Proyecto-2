@@ -12,7 +12,7 @@ const router = Router();
 
 // get /posts
 //Obtener todos los post
-router.get(
+router.get( //PROBAR CON POSTS SUBIDOS
     "/posts",
     handleAsyncError(async (req, res) => {
         //Obtener todos los posts

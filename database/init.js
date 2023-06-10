@@ -4,7 +4,7 @@ require("dotenv").config();
 const cryptoService = require("../services/crypto.js");
 const { createPool } = require("./connection.js");
 const { createTables } = require("./tables.js");
-//Añadir funcion de InserAdminUsers
+//Añadir funcion de InsertAdminUsers
 
 //Creamos una funcion. Dentro de la funcion creamos una variable
 //En esa variable almacenamos la llamada a la funcion

@@ -32,7 +32,8 @@ router.post(
     })
 );
 // post  "/users/login"
-//Logearse, devuelve un token
+//Logearse, devuelve un token 
+//A PARTIR DE AQUI PETA
 router.post(
     "/users/login",
     json(),

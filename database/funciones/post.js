@@ -11,6 +11,9 @@ async function getAllPosts() {
         p.userId,
         p.title,
         p.description,
+        p.photo1,
+        p.photo2,
+        p.photo3,
         COALESCE(l.like_count, 0) AS likes,
         COALESCE(c.comment_count, 0) as comments,
         (
@@ -49,18 +52,21 @@ async function savePost(post) {
         post.userId,
         post.title,
         post.description,
+        post.photo1,
+        post.photo2 || null ,
+        post.photo3 || null
     ]);
 }
 
 //updatePost
-//Funcion para actualizar un post
+//Funcion para modificar un post
 async function updatePost(post) {
     const statement = `
     UPDATE posts
-    SET title = ?, description = ?
+    SET title = ?, description = ?, photo2 = ?, photo3 = ?
     WHERE id = ?
     `;
-    await db.execute(statement, [post.title, post.description, post.id]);
+    await db.execute(statement, [post.title, post.description, post.id, post.photo2, post.photo3]);
 }
 
 //getPostById

@@ -23,6 +23,9 @@ async function createTables(pool) {
           id VARCHAR(100) PRIMARY KEY,
           title VARCHAR(150) NOT NULL,
           description TEXT NOT NULL,
+          photo1 VARCHAR(300) NOT NULL,
+          photo2 VARCHAR(300),
+          photo3 VARCHAR(300),
           userId VARCHAR(100) NOT NULL,
           createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
@@ -45,15 +48,6 @@ async function createTables(pool) {
           comment VARCHAR(300) NOT NULL,
           createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
-          FOREIGN KEY (postId) REFERENCES posts(id) ON DELETE CASCADE
-      )`);
-
-    await pool.query(`
-      CREATE TABLE post_photos(
-          id VARCHAR(100) PRIMARY KEY,
-          postId VARCHAR(100) NOT NULL,
-          imageURL VARCHAR(300) NOT NULL,
-          createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (postId) REFERENCES posts(id) ON DELETE CASCADE
       )`);
 
