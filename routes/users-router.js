@@ -6,8 +6,8 @@ const { handleAsyncError } = require("../services/errors.js");
 const { registerUser } = require("../use-cases/register.js");
 const { loginUser } = require("../use-cases/login.js");
 const { sendResponse } = require("../services/response.js");
-const registerPayload = require ("../validators/register.js");
-const loginPayload = require ("../validators/login.js");
+const registerPayload = require("../validators/register.js");
+const loginPayload = require("../validators/login.js");
 const router = Router();
 // post  "/users/register"
 //Registrar un usuario
@@ -17,6 +17,17 @@ router.post(
     validateBody(registerPayload),
     handleAsyncError(async (req, res) => {
         await registerUser(req.body);
+        sendResponse(res);
+    })
+);
+//post "/users/validate-email"
+//Validar el email
+router.post(
+    "/users/validate-email",
+    json(),
+    handleAsyncError(async (req, res) => {
+        const { email, code } = req.body;
+        await validateEmailCode(email, code);
         sendResponse(res);
     })
 );
@@ -32,17 +43,6 @@ router.post(
         sendResponse(res, {
             token,
         });
-    })
-);
-//post "/users/validate-email"
-//Validar el email
-router.post(
-    "/users/validate-email",
-    json(),
-    handleAsyncError(async (req, res) => {
-        const { email, code } = req.body;
-        await validateEmailCode(email, code);
-        sendResponse(res);
     })
 );
 //get "/users"
