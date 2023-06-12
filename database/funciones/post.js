@@ -44,8 +44,8 @@ async function getAllPosts() {
 //Funcion que guarda el post
 async function savePost(post) {
     const statement = `
-    INSERT INTO posts(id,userId,title,description)
-    VALUES(?,?,?,?)
+    INSERT INTO posts(id,userId,title,description, photo1, photo2, photo3)
+    VALUES(?,?,?,?,?,?,?)
     `;
     await db.execute(statement, [
         post.id,
@@ -66,7 +66,7 @@ async function updatePost(post) {
     SET title = ?, description = ?, photo2 = ?, photo3 = ?
     WHERE id = ?
     `;
-    await db.execute(statement, [post.title, post.description, post.id, post.photo2, post.photo3]);
+    await db.execute(statement, [post.title, post.description, post.id, post.photo2, post.photo3]); // Para las fotos 2 y 3, pasar valor nulo para borrarlas
 }
 
 //getPostById

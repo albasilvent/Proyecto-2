@@ -8,6 +8,9 @@ const { loginUser } = require("../use-cases/login.js");
 const { sendResponse } = require("../services/response.js");
 const registerPayload = require("../validators/register.js");
 const loginPayload = require("../validators/login.js");
+const { listUsers } = require("../use-cases/list.js");
+const { editUser } = require("../use-cases/edit");
+const { viewUser } = require("../use-cases/view-details.js");
 const router = Router();
 // post  "/users/register"
 //Registrar un usuario
@@ -32,7 +35,7 @@ router.post(
     })
 );
 // post  "/users/login"
-//Logearse, devuelve un token 
+//Logearse, devuelve un token
 //A PARTIR DE AQUI PETA
 router.post(
     "/users/login",
@@ -40,29 +43,45 @@ router.post(
     validateBody(loginPayload),
     handleAsyncError(async (req, res) => {
         //Loguea el usuario y devuelve un token de login
-        const token = await loginUser(req.body);
+        const { email, password } = req.body;
+        const token = await loginUser(email, password);
         sendResponse(res, {
             token,
         });
     })
 );
 //get "/users"
-//Obtener todos los usuarios
-router.get("/users", authGuard, (req, res) => {
-    // Obtener todos los usuarios (solo para admins)
-    res.send("Listado usuarios");
-});
+//Obtener todos los usuarios //NO VA
+router.get(
+    "/users",
+    handleAsyncError(async (req, res) => {
+        //Obtener todos los posts
+        const posts = await listUsers();
+        sendResponse(res, posts);
+    })
+);
+
 //get "/users/:id"
-//Obetener el usuario
-router.get("/users/:id", authGuard, (req, res) => {
-    // Obtener el usuario con id req.params.id
-    res.send("Detalle usuario");
-});
+//Obtener el usuario
+router.get(
+    "/users/:id",
+    handleAsyncError(async (req, res) => {
+        // Obtener el post con id req.params.id
+        const user = await viewUser(req.params.id);
+        sendResponse(res, user);
+    })
+);
+
 //patch "/users/:id"
 //Modificar daros de usuario
-router.patch("/users/:id", authGuard, json(), (req, res) => {
-    // Modificar datos del usuario (solo para el propio usuario, o para el admin)
-    res.json(req.body);
-});
-
+router.patch(
+    "/users/:id",
+    authGuard,
+    json(),
+    handleAsyncError(async (req, res) => {
+        // Editar el post con id req.params.id
+        await editUser(req.params.id, req.currentUser.id, req.body);
+        sendResponse(res);
+    })
+);
 module.exports = router;

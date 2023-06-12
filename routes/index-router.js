@@ -11,7 +11,7 @@ const router = Router();
 
 router.use(commentsRouter);
 router.use(likesRouter);
-router.use(photosRouter);
+// router.use(photosRouter);
 router.use(postsRouter);
 router.use(usersRouter);
 

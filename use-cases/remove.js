@@ -17,34 +17,34 @@ async function removeComment (commentId, userId) {
     await deleteComment(commentId);
   };
 
-async function removePhoto (postId, photoId, userId) {
-    const post = await getPostById(postId);
-    //checkear que ese post exista
-    if (!post) {
-      notFound();
-    }
-    //checkear si este usuario puede cargarle fotos a ese post.
-    if (post.userId != userId) {
-      unauthorizedUser();
-    }
+// async function removePhoto (postId, photoId, userId) {
+//     const post = await getPostById(postId);
+//     //checkear que ese post exista
+//     if (!post) {
+//       notFound();
+//     }
+//     //checkear si este usuario puede cargarle fotos a ese post.
+//     if (post.userId != userId) {
+//       unauthorizedUser();
+//     }
   
-    //checkear si existe la foto
-    const photo = await getPhotoById(photoId);
-    if (!photo) {
-      notFound();
-    }
+//     //checkear si existe la foto
+//     const photo = await getPhotoById(photoId);
+//     if (!photo) {
+//       notFound();
+//     }
   
-    //Si la foto no es una foto de ese post
-    if (photo.postId != postId) {
-      unauthorizedUser();
-    }
+//     //Si la foto no es una foto de ese post
+//     if (photo.postId != postId) {
+//       unauthorizedUser();
+//     }
   
-    //Borrar la foto de la base de datos
-    await deletePhoto(photoId);
+//     //Borrar la foto de la base de datos
+//     await deletePhoto(photoId);
   
-    //Borrar la foto del sistema archivos
-    await deletePhoto(photo);
-  };
+//     //Borrar la foto del sistema archivos
+//     await deletePhoto(photo);
+//   };
 
 async function removePost (postId, userId) {
     const post = await getPostById(postId);
@@ -61,6 +61,5 @@ async function removePost (postId, userId) {
 
   module.exports = {
     removeComment,
-    removePhoto,
-    removePost,
+    removePost
   };

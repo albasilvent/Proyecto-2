@@ -7,12 +7,11 @@
 //Retornamos post
 
 const { getPostById } = require("../database/funciones/post.js");
-
+const { getUserById } = require("../database/funciones/users.js");
 const { notFound } = require("../services/errors.js");
-
 const { getCommentsByPostId } = require("../database/funciones/comment.js");
-
 const { likesCountPost } = require("../database/funciones/like.js");
+
 
 async function viewPost(postId) {
     const post = await getPostById(postId);
@@ -24,6 +23,16 @@ async function viewPost(postId) {
     return post;
 }
 
+async function viewUser(userId) {
+    const user = await getUserById(userId);
+    if (!user) {
+        notFound();
+    }
+
+    return user;
+}
+
 module.exports = {
     viewPost,
+    viewUser,
 };

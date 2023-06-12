@@ -1,5 +1,6 @@
 const { invalidCredentials, emailNotValidated } = require("../services/errors");
 const { getUserByEmail } = require("../database/funciones/users");
+const { getPassword } = require("../database/funciones/users");
 const { validatePassword } = require("../services/crypto");
 const { generateJWT } = require("../services/JWT");
 
@@ -14,8 +15,11 @@ async function loginUser(email, plainPassword) {
     if (!user.emailValidated) {
         emailNotValidated();
     }
+
+    const password = await getPassword(email);
+
     //valido la plainPassword contra el hash
-    const valid = await validatePassword(plainPassword, user.password);
+    const valid = await validatePassword(plainPassword, password.password);
     //si no es válida, tiro un error ("las credenciales son invalidas")
     if (!valid) {
         invalidCredentials();
