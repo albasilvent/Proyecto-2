@@ -2,6 +2,7 @@ const {
     getCommentById,
     updateComment,
 } = require("../database/funciones/comment");
+const { getUserById, updateUser} = require("../database/funciones/users");
 const { getPostById } = require("../database/funciones/post");
 const { notFound, unauthorizedUser } = require("../services/errors");
 
@@ -10,6 +11,29 @@ const { notFound, unauthorizedUser } = require("../services/errors");
 //si el post no existe, lanza error 404
 // SI el id del usuario del post no coincide con el id del usuario,lanza error
 //Si esta todo correcto, edita el post (titulo, foto y descripcion)
+
+async function editUser(userId, userPayload) {
+    const user = await getUserById(userId);
+    if (!user) {
+        notFound();
+    }
+
+    if (user.id != userId) {
+        unauthorizedUser();
+    }
+
+    const updatedUser = {
+        ...user,
+        name: userPayload.name,
+        surname1: userPayload.surname1,
+        surname2: userPayload.surname2,
+        country: userPayload.country
+    };
+    
+    await updateUser(updatedUser);
+}
+
+
 
 async function editPost(postId, userId, postPayload) {
     const post = await getPostById(postId);
@@ -25,6 +49,8 @@ async function editPost(postId, userId, postPayload) {
         ...post,
         title: postPayload.title,
         description: postPayload.description,
+        photo2: postPayload.photo2,
+        photo3: postPayload.photo3
     };
 
     await updatePost(updatedPost);
@@ -47,7 +73,9 @@ async function editComment(commentId, userId, commentPayload) {
     await updateComment(commentId, commentPayload);
 }
 
+
 module.exports = {
+    editUser,
     editPost,
     editComment,
 };

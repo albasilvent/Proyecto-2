@@ -12,7 +12,7 @@ const { validateToken } = require("./middlewares/validate-token.js");
 const { sendError } = require("./services/errors.js");
 
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
 
 const staticDirectory = path.join(__dirname, "./public");
 app.use(express.static(staticDirectory));

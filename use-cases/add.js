@@ -14,8 +14,11 @@ async function addPost(currentUserId, postPayload) {
     const post = {
         title: postPayload.title,
         description: postPayload.description,
+        photo1: postPayload.photo1,
+        photo2: postPayload.photo2,
+        photo3: postPayload.photo3,
         userId: currentUserId,
-        id: generateUUID,
+        id: generateUUID(),
     };
     await savePost(post);
 }
@@ -38,29 +41,28 @@ async function addComment(postId, currentUserId, commentPayload) {
 
 // Función para añadir fotos. Misma sintaxis que la función anterior.
 
-async function addPhoto(postId, userId, photo) {
-    const post = await getPostById(postId);
+// async function addPhoto(postId, userId, photo) {
+//     const post = await getPostById(postId);
 
-    if (!post) {
-        notFound();
-    }
+//     if (!post) {
+//         notFound();
+//     }
 
-    if (post.userId != userId) {
-        unauthorizedUser();
-    }
+//     if (post.userId != userId) {
+//         unauthorizedUser();
+//     }
 
-    const url = await processUploadedPostPhoto(postId, id, photo);
+//     const url = await processUploadedPostPhoto(postId, id, photo);
 
-    const newPhoto = {
-        id: generateUUID(),
-        postId: postId,
-        imgURL: url,
-    };
-    await savePhoto(newPhoto);
-}
+//     const newPhoto = {
+//         id: generateUUID(),
+//         postId: postId,
+//         imgURL: url,
+//     };
+//     await savePhoto(newPhoto);
+// }
 
 module.exports = {
     addPost,
     addComment,
-    addPhoto,
 };

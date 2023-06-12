@@ -4,9 +4,9 @@
 
 //Buscar fotos por su texto descriptivo
 
-//Login
+//Login HECHO
 
-//Registro
+//Registro HECHO
 
 //Publicar una foto (se ajusta automaticamente) y añadir una descripcion
 

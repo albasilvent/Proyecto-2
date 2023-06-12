@@ -1,4 +1,7 @@
 //Funciones de fotos
+//SE PUEDE BORRAR ESTA CARPETA ??????????????
+
+
 const { getConnection } = require("../connection.js");
 
 const db = getConnection();
