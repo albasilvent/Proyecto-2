@@ -36,20 +36,76 @@ async function getUserByEmail(email) {
     return rows[0];
 }
 
-//getPostById
+//getUserById
 //Funcion que devuelve los posts segun la id
+// async function getUserById(userId) {
+//     const userStatement = `
+//       SELECT users.name, COUNT(posts.id) AS postCount
+//       FROM users
+//       LEFT JOIN posts ON users.id = posts.userId
+//       WHERE users.id = ?
+//       GROUP BY users.id;
+//     `;
+  
+//     const postStatement = `
+//       SELECT title, description, photo1, photo2, photo3
+//       FROM posts
+//       WHERE userId = ?;
+//     `;
+  
+//     const [userRows] = await db.execute(userStatement, [userId]);
+  
+//     if (userRows.length === 0) {
+//       return null; // No se encontró ningún usuario con el ID dado
+//     }
+  
+//     const user = userRows[0];
+  
+//     const [postRows] = await db.execute(postStatement, [userId]);
+//     const posts = postRows;
+  
+//     user.posts = posts;
+  
+//     return user;
+//   }
+  
 async function getUserById(userId) {
-    const statement = `
-      SELECT *
-      FROM users as u
-      WHERE u.id = ?
+    const userStatement = `
+      SELECT users.name, COUNT(posts.id) AS postCount
+      FROM users
+      LEFT JOIN posts ON users.id = posts.userId
+      WHERE users.id = ?
+      GROUP BY users.id;
     `;
-    const [rows] = await db.execute(statement, [userId]);
+  
+    const postStatement = `
+      SELECT photo1, photo2, photo3
+      FROM posts
+      WHERE userId = ?;
+    `;
+  
+    const [userRows] = await db.execute(userStatement, [userId]);
+  
+    if (userRows.length === 0) {
+      return null; // No se encontró ningún usuario con el ID dado
+    }
+  
+    const user = userRows[0];
+  
+    const [postRows] = await db.execute(postStatement, [userId]);
+    const posts = postRows.map(row => ({
+      photo1: row.photo1,
+      photo2: row.photo2,
+      photo3: row.photo3
+    }));
+  
+    user.posts = posts;
+  
+    return user;
+  }
+  
 
-    return rows[0];
-}
-
-async function getPassword(email){
+async function getPassword(email) {
     const statement = `
       SELECT password
       FROM users
@@ -75,7 +131,13 @@ async function updateUser(user) {
     SET name = ?, surname1 = ?, surname2 = ?, country = ?
     WHERE id = ?
     `;
-    await db.execute(statement, [user.name, user.surname1, user.surname2, user.country, user.id]); // Para las fotos 2 y 3, pasar valor nulo para borrarlas
+    await db.execute(statement, [
+        user.name,
+        user.surname1,
+        user.surname2,
+        user.country,
+        user.id,
+    ]); // Para las fotos 2 y 3, pasar valor nulo para borrarlas
 }
 
 module.exports = {
@@ -84,5 +146,5 @@ module.exports = {
     getUserById,
     getPassword,
     getAllUsers,
-    updateUser
+    updateUser,
 };

@@ -9,6 +9,7 @@ const router = Router();
 
 // post "/posts/:id/comments"
 // Agregar un nuevo comentario al post
+//FUNCIONA
 
 router.post(
     "/posts/:id/comments",
@@ -22,6 +23,7 @@ router.post(
 );
 // patch "/posts/:id/comments/:commentId"
 // Modificar el comentario
+//FUNCIONA
 router.patch(
     "/posts/:id/comments/:commentId",
     authGuard,
@@ -34,6 +36,8 @@ router.patch(
 );
 // delete  "/posts/:id/comments/:commentId"
 // Borrar el comentario
+//FUNCIONA
+
 router.delete(
     "/posts/:id/comments/:commentId",
     authGuard,

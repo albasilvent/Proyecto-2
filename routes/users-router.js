@@ -36,7 +36,6 @@ router.post(
 );
 // post  "/users/login"
 //Logearse, devuelve un token
-//A PARTIR DE AQUI PETA
 router.post(
     "/users/login",
     json(),
@@ -50,19 +49,20 @@ router.post(
         });
     })
 );
-//get "/users"
-//Obtener todos los usuarios //NO VA
-router.get(
-    "/users",
-    handleAsyncError(async (req, res) => {
-        //Obtener todos los posts
-        const posts = await listUsers();
-        sendResponse(res, posts);
-    })
-);
+// //get "/users"
+// //Obtener todos los usuarios //NO LO PIDEN
+// router.get(
+//     "/users",
+//     handleAsyncError(async (req, res) => {
+//         //Obtener todos los posts
+//         const posts = await listUsers();
+//         sendResponse(res, posts);
+//     })
+// );
 
 //get "/users/:id"
 //Obtener el usuario
+//ESTO ESTA DEVOLVIENDO LOS DATOS DEL USUARIO, TAMBIEN TIENE QUE DEVOLVER LOS POSTS CON UN JOIN
 router.get(
     "/users/:id",
     handleAsyncError(async (req, res) => {
@@ -73,14 +73,14 @@ router.get(
 );
 
 //patch "/users/:id"
-//Modificar daros de usuario
+//Modificar datos de usuario
 router.patch(
-    "/users/:id",
+    "/users/:email",
     authGuard,
     json(),
     handleAsyncError(async (req, res) => {
         // Editar el post con id req.params.id
-        await editUser(req.params.id, req.currentUser.id, req.body);
+        await editUser(req.params.email, req.body);
         sendResponse(res);
     })
 );

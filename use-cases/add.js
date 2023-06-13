@@ -5,7 +5,6 @@
 //Aqui PAblo puso add photo pero como nuestro post es en si una foto, no se como hacer
 const { generateUUID } = require("../services/crypto");
 const { saveComment } = require("../database/funciones/comment");
-const { savePhoto } = require("../database/funciones/photo");
 const { getPostById, savePost } = require("../database/funciones/post");
 const { notFound, unauthorizedUser } = require("../services/errors");
 const { processUploadedPostPhoto } = require("../services/images");
@@ -20,6 +19,7 @@ async function addPost(currentUserId, postPayload) {
         userId: currentUserId,
         id: generateUUID(),
     };
+
     await savePost(post);
 }
 

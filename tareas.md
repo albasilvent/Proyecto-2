@@ -1,6 +1,6 @@
 //Ver las ultimas fotos
 
-//Ver el perfil de un usuario con su galeria
+//Ver el perfil de un usuario con su galeria HECHO PREGUNTAR A DAVID SI SE TIENEN QUE VER SOLO LAS FOTOS
 
 //Buscar fotos por su texto descriptivo
 
@@ -10,11 +10,11 @@
 
 //Publicar una foto (se ajusta automaticamente) y añadir una descripcion
 
-//Likes
+//Likes HECHO
 
-//Cambio de datos en el registro
+//Cambio de datos en el registro HECHO
 
-//Comentar una foto
+//Comentar una foto HECHO
 
 
 

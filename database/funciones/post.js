@@ -15,14 +15,7 @@ async function getAllPosts() {
         p.photo2,
         p.photo3,
         COALESCE(l.like_count, 0) AS likes,
-        COALESCE(c.comment_count, 0) as comments,
-        (
-            SELECT imageURL
-            FROM post_photos
-            WHERE postId = p.id
-            ORDER BY id ASC
-            LIMIT 1
-        ) as mainImage
+        COALESCE(c.comment_count, 0) as comments
     FROM
         posts p
         LEFT JOIN (

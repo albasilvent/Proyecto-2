@@ -7,6 +7,7 @@ const { toggleLike } = require("../use-cases/like");
 const { sendResponse } = require("../services/response");
 const router = Router();
 
+//FUNCIONA
 router.post(
     "/posts/:id/like",
     authGuard,

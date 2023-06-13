@@ -8,10 +8,6 @@ async function listPosts() {
     return await getAllPosts();
 }
 
-module.exports = {
-    listPosts,
-};
-
 async function listUsers() {
     return await getAllUsers();
 }

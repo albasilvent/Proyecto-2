@@ -2,7 +2,7 @@ const {
     getCommentById,
     updateComment,
 } = require("../database/funciones/comment");
-const { getUserById, updateUser} = require("../database/funciones/users");
+const { updateUser, getUserByEmail} = require("../database/funciones/users");
 const { getPostById } = require("../database/funciones/post");
 const { notFound, unauthorizedUser } = require("../services/errors");
 
@@ -12,13 +12,13 @@ const { notFound, unauthorizedUser } = require("../services/errors");
 // SI el id del usuario del post no coincide con el id del usuario,lanza error
 //Si esta todo correcto, edita el post (titulo, foto y descripcion)
 
-async function editUser(userId, userPayload) {
-    const user = await getUserById(userId);
+async function editUser(userEmail, userPayload) {
+    const user = await getUserByEmail(userEmail);
     if (!user) {
         notFound();
     }
 
-    if (user.id != userId) {
+    if (user.email != userEmail) {
         unauthorizedUser();
     }
 
