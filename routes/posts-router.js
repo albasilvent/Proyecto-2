@@ -48,7 +48,6 @@ router.get(
 );
 
 //Obtener todos los post que coincidan con la busqueda
-//NO FUNCIONA
 router.get(
     "/posts/search",
     handleAsyncError(async (req, res) => {

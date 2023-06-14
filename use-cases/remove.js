@@ -1,6 +1,7 @@
 const { getCommentById, deleteComment } = require("../database/funciones/comment");
 const { notFound, unauthorizedUser } = require("../services/errors");
 const { getPostById } = require("../database/funciones/post");
+const { deletePost } = require("../database/funciones/post");
 
 //Funcion para eliminar un comentario
 async function removeComment (commentId, userId) {
