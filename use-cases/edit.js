@@ -2,29 +2,29 @@ const {
     getCommentById,
     updateComment,
 } = require("../database/funciones/comment");
-const { updateUser, getUserByEmail} = require("../database/funciones/users");
+const { updateUser, getUserById } = require("../database/funciones/users");
 const { getPostById } = require("../database/funciones/post");
 const { notFound, unauthorizedUser } = require("../services/errors");
 
 //Editar los datos de usuario
-async function editUser(userEmail, userPayload) {
-    const user = await getUserByEmail(userEmail);
+async function editUser(userId, userPayload) {
+    // Comprobamos si existe un usuario con el id del token.
+    const user = await getUserById(userId);
+
+    // Si no existe lanzamos un error.
     if (!user) {
         notFound();
     }
 
-    if (user.email != userEmail) {
-        unauthorizedUser();
-    }
-
+    // Actualizamos el usuario.
     const updatedUser = {
-        ...user,
-        name: userPayload.name,
-        surname1: userPayload.surname1,
-        surname2: userPayload.surname2,
-        country: userPayload.country
+        id: userId,
+        name: userPayload.name || user.name,
+        surname1: userPayload.surname1 || user.surname1,
+        surname2: userPayload.surname2 || user.surname2,
+        country: userPayload.country || user.country,
     };
-    
+
     await updateUser(updatedUser);
 }
 
@@ -44,7 +44,7 @@ async function editPost(postId, userId, postPayload) {
         title: postPayload.title,
         description: postPayload.description,
         photo2: postPayload.photo2,
-        photo3: postPayload.photo3
+        photo3: postPayload.photo3,
     };
 
     await updatePost(updatedPost);
@@ -61,7 +61,6 @@ async function editComment(commentId, userId, commentPayload) {
     }
     await updateComment(commentId, commentPayload);
 }
-
 
 module.exports = {
     editUser,

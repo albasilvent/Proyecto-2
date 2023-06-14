@@ -1,7 +1,7 @@
-// Crear todas las tablas 
+// Crear todas las tablas
 
 async function createTables(pool) {
-  //users
+    //users
     await pool.query(`
       CREATE TABLE users(
           id VARCHAR(100) PRIMARY KEY,

@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node --watch ./app.js",
+    "dev": "nodemon ./app.js",
     "initDB": "node database/init.js"
   },
   "keywords": [],
@@ -23,5 +23,8 @@
     "node-mailjet": "^6.0.2",
     "path": "^0.12.7",
     "sharp": "^0.32.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }

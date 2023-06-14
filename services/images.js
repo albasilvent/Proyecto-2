@@ -2,43 +2,39 @@
 const path = require("path");
 const fs = require("fs/promises");
 const sharp = require("sharp");
-const {generateUUID} = require("../services/crypto");
+const { generateUUID } = require("../services/crypto");
 
 //processUploadedPostPhoto.
-async function processUploadedPostPhoto(userId, postPayload) {
-  const directory = path.join(__dirname, "../public/photos", userId); // Directorio donde se guarda la foto
+async function processUploadedPostPhoto(userId, photo) {
+    const directory = path.join(__dirname, "../public/photos", userId); // Directorio donde se guarda la foto
 
-  try {
-    await fs.mkdir(directory, { recursive: true }); // Asegurarse de que el directorio exista
+    try {
+        await fs.mkdir(directory, { recursive: true }); // Asegurarse de que el directorio exista
 
-    // Establecer un fileName, que será el nombre final del archivo nuevo
-    const fileName = generateUUID() + ".webp";
+        // Procesar la primera foto con sharp.
+        const sharpPhoto = sharp(photo.data);
 
-    // Crear la ruta absoluta al archivo
-    const filePath = path.join(directory, fileName);
+        // Redimensionamos la imagen a 500px.
+        sharpPhoto.resize(500);
 
-    // Procesar el archivo con sharp y guardarlo en disco
-    const sharpProcess = sharp(postPayload.photo1);
-    const metadata = await sharpProcess.metadata();
+        // Establecer un fileName, que será el nombre final del archivo nuevo.
+        const fileName = generateUUID() + ".jpg";
 
-    if (metadata.width > 500) {
-      sharpProcess.resize(500);
+        // Crear la ruta absoluta al archivo.
+        const filePath = path.join(directory, fileName);
+
+        // Guardamos la foto.
+        await sharpPhoto.toFile(filePath);
+
+        // Retornamos el nombre del archivo.
+        return fileName;
+    } catch (error) {
+        // Manejo de errores si ocurre algún problema durante el proceso
+        console.error("Error al procesar la foto:", error);
+        throw error;
     }
-
-    await sharpProcess.webp().toFile(filePath);
-
-    // Generar la URL del archivo para Express
-    const fileURL = `/photos/${userId}/${fileName}`;
-    
-    return fileURL;
-  } catch (error) {
-    // Manejo de errores si ocurre algún problema durante el proceso
-    console.error("Error al procesar la foto:", error);
-    throw error;
-  }
 }
 
-
-module.exports= {
-  processUploadedPostPhoto,
+module.exports = {
+    processUploadedPostPhoto,
 };

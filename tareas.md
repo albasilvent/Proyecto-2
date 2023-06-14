@@ -8,7 +8,7 @@
 
 //Registro HECHO
 
-//Publicar una foto (se ajusta automaticamente) y añadir una descripcion
+//Publicar una foto (se ajusta automaticamente) y añadir una descripcion HECHOOO
 
 //Likes HECHO
 

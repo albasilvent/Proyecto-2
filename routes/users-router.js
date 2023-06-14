@@ -8,8 +8,8 @@ const { loginUser } = require("../use-cases/login.js");
 const { sendResponse } = require("../services/response.js");
 const registerPayload = require("../validators/register.js");
 const loginPayload = require("../validators/login.js");
-const codePayload= require("../validators/code.js");
-const userPayload= require("../validators/edit-user.js")
+const codePayload = require("../validators/code.js");
+const userPayload = require("../validators/edit-user.js");
 const { editUser } = require("../use-cases/edit");
 const { viewUser } = require("../use-cases/view-details.js");
 const router = Router();
@@ -64,13 +64,13 @@ router.get(
 
 //Modificar datos de usuario
 router.patch(
-    "/users/:email",
+    "/users",
     authGuard,
     json(),
     validateBody(userPayload),
     handleAsyncError(async (req, res) => {
         // Editar el post con id req.params.id
-        await editUser(req.params.email, req.body);
+        await editUser(req.currentUser.id, req.body);
         sendResponse(res);
     })
 );

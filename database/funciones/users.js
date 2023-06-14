@@ -47,26 +47,26 @@ async function getUserByEmail(email) {
 //       WHERE users.id = ?
 //       GROUP BY users.id;
 //     `;
-  
+
 //     const postStatement = `
 //       SELECT title, description, photo1, photo2, photo3
 //       FROM posts
 //       WHERE userId = ?;
 //     `;
-  
+
 //     const [userRows] = await db.execute(userStatement, [userId]);
-  
+
 //     if (userRows.length === 0) {
 //       return null; // No se encontró ningún usuario con el ID dado
 //     }
-  
+
 //     const user = userRows[0];
-  
+
 //     const [postRows] = await db.execute(postStatement, [userId]);
 //     const posts = postRows;
-  
+
 //     user.posts = posts;
-  
+
 //     return user;
 //   }
 
@@ -80,33 +80,33 @@ async function getUserById(userId) {
       WHERE users.id = ?
       GROUP BY users.id;
     `;
-  
+
     const postStatement = `
       SELECT photo1, photo2, photo3
       FROM posts
       WHERE userId = ?;
     `;
-  
+
     const [userRows] = await db.execute(userStatement, [userId]);
-  
+
     if (userRows.length === 0) {
-      return null; // No se encontró ningún usuario con el ID dado
+        return null; // No se encontró ningún usuario con el ID dado
     }
-  
+
     const user = userRows[0];
-  
+
     const [postRows] = await db.execute(postStatement, [userId]);
-    const posts = postRows.map(row => ({
-      photo1: row.photo1,
-      photo2: row.photo2,
-      photo3: row.photo3
+    const posts = postRows.map((row) => ({
+        photo1: row.photo1,
+        photo2: row.photo2,
+        photo3: row.photo3,
     }));
-  
+
     user.posts = posts;
-  
+
     return user;
-  }
-  
+}
+
 //getPassword
 //Funcion que devuelve la contraseña
 async function getPassword(email) {
@@ -123,18 +123,21 @@ async function getPassword(email) {
 //updateUsers
 //Funcion para modificar un user
 async function updateUser(user) {
+    console.log(user);
+
     const statement = `
-    UPDATE users
-    SET name = ?, surname1 = ?, surname2 = ?, country = ?
-    WHERE id = ?
+      UPDATE users
+      SET name = ?, surname1 = ?, surname2 = ?, country = ?
+      WHERE id = ?
     `;
+
     await db.execute(statement, [
         user.name,
         user.surname1,
         user.surname2,
         user.country,
         user.id,
-    ]); // Para las fotos 2 y 3, pasar valor nulo para borrarlas
+    ]);
 }
 
 module.exports = {

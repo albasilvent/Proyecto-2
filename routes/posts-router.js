@@ -1,7 +1,8 @@
-const { Router, json } = require("express");
+const { Router } = require("express");
+const fileUpload = require("express-fileupload");
 const { authGuard } = require("../middlewares/auth-guard.js");
 const { validateBody } = require("../middlewares/validate-body.js");
-const postPayload= require("../validators/add-photo.js")
+const postPayload = require("../validators/add-post.js");
 const { handleAsyncError } = require("../services/errors");
 const { listPosts } = require("../use-cases/list");
 const { search } = require("../use-cases/search");
@@ -13,15 +14,14 @@ const { sendResponse } = require("../services/response");
 const router = Router();
 
 //Crear un nuevo post
-//NO FUNCIONA
 router.post(
     "/posts",
     authGuard,
-    json(),
+    fileUpload(),
     validateBody(postPayload),
     handleAsyncError(async (req, res) => {
         // Crear un nuevo post
-        await addPost(req.currentUser.id, req.body);
+        await addPost(req.currentUser.id, req.body, req.files);
         sendResponse(res, undefined, 201);
     })
 );
@@ -62,7 +62,7 @@ router.get(
 router.patch(
     "/posts/:id",
     authGuard,
-    json(),
+    fileUpload(),
     validateBody(postPayload),
     handleAsyncError(async (req, res) => {
         // Editar el post con id req.params.id

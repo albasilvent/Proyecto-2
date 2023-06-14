@@ -6,16 +6,30 @@ const { processUploadedPostPhoto } = require("../services/images");
 
 //addPost
 //Funcion que añade un post
-async function addPost(currentUserId, postPayload) {
+async function addPost(currentUserId, postPayload, files) {
     const post = {
+        id: generateUUID(),
         title: postPayload.title,
         description: postPayload.description,
-        photo1: await processUploadedPostPhoto(currentUserId, postPayload.photo1),
-        photo2: await processUploadedPostPhoto(currentUserId, postPayload.photo2),
-        photo3: await processUploadedPostPhoto(currentUserId, postPayload.photo3),
+        photo1: await processUploadedPostPhoto(currentUserId, files.photo1),
         userId: currentUserId,
-        id: generateUUID(),
     };
+
+    // Si existe la foto 2...
+    if (files.photo2) {
+        post.photo2 = await processUploadedPostPhoto(
+            currentUserId,
+            files.photo2
+        );
+    }
+
+    // Si existe la foto 3...
+    if (files.photo3) {
+        post.photo3 = await processUploadedPostPhoto(
+            currentUserId,
+            files.photo3
+        );
+    }
 
     await savePost(post);
 }
