@@ -1,37 +1,42 @@
-const { getCommentById, deleteComment } = require("../database/funciones/comment");
+const {
+    getCommentById,
+    deleteComment,
+} = require("../database/funciones/comment");
 const { notFound, unauthorizedUser } = require("../services/errors");
 const { getPostById } = require("../database/funciones/post");
+const { post } = require("../routes/posts-router");
+const { deletePost } = require("../database/funciones/post");
 
 //Funcion para eliminar un comentario
-async function removeComment (commentId, userId) {
+async function removeComment(commentId, userId) {
     //Obtener el comentario con id "commentId"
     const comment = await getCommentById(commentId);
     if (!comment) {
-      notFound();
+        notFound();
     }
     //Comparar el id del token (userId) con el userID del comentario
     // Si no son iguales, tirar un error
     if (comment.userId != userId) {
-      unauthorizedUser();
+        unauthorizedUser();
     }
     await deleteComment(commentId);
-  };
+}
 
 //Funcion para eliminar un post
-async function removePost (postId, userId) {
+async function removePost(postId, userId) {
     const post = await getPostById(postId);
-  
+
     if (!post) {
-      notFound();
+        notFound();
     }
-  
+
     if (post.userId != userId) {
-      unauthorizedUser();
+        unauthorizedUser();
     }
     await deletePost(postId);
-  };
+}
 
-  module.exports = {
+module.exports = {
     removeComment,
-    removePost
-  };
+    removePost,
+};
