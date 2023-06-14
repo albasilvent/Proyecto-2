@@ -1,7 +1,3 @@
-//Iniciamos la app
-//Ponemos el listen
-//Usamos validate token y indexRouter
-//El resto no se que es, tengo que mirarlo
 require("dotenv").config();
 
 const path = require("path");
@@ -12,6 +8,7 @@ const { validateToken } = require("./middlewares/validate-token.js");
 const { sendError } = require("./services/errors.js");
 
 const app = express();
+//Añadimos el puerto
 const PORT = 5000;
 
 const staticDirectory = path.join(__dirname, "./public");

@@ -1,4 +1,4 @@
-//Ver las ultimas fotos
+//Ver las ultimas fotos HECHO
 
 //Ver el perfil de un usuario con su galeria HECHO PREGUNTAR A DAVID SI SE TIENEN QUE VER SOLO LAS FOTOS
 

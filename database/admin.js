@@ -1,5 +1,6 @@
 const { generateUUID, hashPassword } = require("../services/crypto");
 
+//Funcion para meter un admin en la base de datos
 async function insertAdminUsers(
     pool,
     name,

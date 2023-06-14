@@ -8,11 +8,12 @@ const { loginUser } = require("../use-cases/login.js");
 const { sendResponse } = require("../services/response.js");
 const registerPayload = require("../validators/register.js");
 const loginPayload = require("../validators/login.js");
-const { listUsers } = require("../use-cases/list.js");
+const codePayload= require("../validators/code.js");
+const userPayload= require("../validators/edit-user.js")
 const { editUser } = require("../use-cases/edit");
 const { viewUser } = require("../use-cases/view-details.js");
 const router = Router();
-// post  "/users/register"
+
 //Registrar un usuario
 router.post(
     "/users/register",
@@ -23,18 +24,19 @@ router.post(
         sendResponse(res);
     })
 );
-//post "/users/validate-email"
+
 //Validar el email
 router.post(
     "/users/validate-email",
     json(),
+    validateBody(codePayload),
     handleAsyncError(async (req, res) => {
         const { email, code } = req.body;
         await validateEmailCode(email, code);
         sendResponse(res);
     })
 );
-// post  "/users/login"
+
 //Logearse, devuelve un token
 router.post(
     "/users/login",
@@ -49,20 +51,8 @@ router.post(
         });
     })
 );
-// //get "/users"
-// //Obtener todos los usuarios //NO LO PIDEN
-// router.get(
-//     "/users",
-//     handleAsyncError(async (req, res) => {
-//         //Obtener todos los posts
-//         const posts = await listUsers();
-//         sendResponse(res, posts);
-//     })
-// );
 
-//get "/users/:id"
-//Obtener el usuario
-//ESTO ESTA DEVOLVIENDO LOS DATOS DEL USUARIO, TAMBIEN TIENE QUE DEVOLVER LOS POSTS CON UN JOIN
+//Obtener el usuario con su galeria
 router.get(
     "/users/:id",
     handleAsyncError(async (req, res) => {
@@ -72,12 +62,12 @@ router.get(
     })
 );
 
-//patch "/users/:id"
 //Modificar datos de usuario
 router.patch(
     "/users/:email",
     authGuard,
     json(),
+    validateBody(userPayload),
     handleAsyncError(async (req, res) => {
         // Editar el post con id req.params.id
         await editUser(req.params.email, req.body);

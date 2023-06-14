@@ -17,14 +17,25 @@ async function saveValidationCode(code) {
 //Funcion que devuelve el codigo de validacion
 async function getValidationCodeByUserId(userId) {
     const statement = `
-      SELECT *
-      FROM validation_codes
-      WHERE userId = ?
+    SELECT *
+    FROM validation_codes
+    WHERE userId = ?
     `;
     const [rows] = await db.execute(statement, [userId]);
-
+    
     return rows[0];
-}
+  }
+  
+  //setEmailValidated
+  //Funcion que confirma que el email esta validado
+  async function setEmailValidated(userId) {
+      const statement = `
+        UPDATE users
+        SET emailValidated = true
+        WHERE id = ?
+      `;
+      await db.execute(statement, [userId]);
+  }
 
 //deleteValidationCOde
 //Funcion que borra el codigo de validacion
@@ -36,16 +47,6 @@ async function deleteValidationCode(codeId) {
     await db.execute(statement, [codeId]);
 }
 
-//setEmailValidated
-//Funcion que confirma que el email esta validado
-async function setEmailValidated(userId) {
-    const statement = `
-      UPDATE users
-      SET emailValidated = true
-      WHERE id = ?
-    `;
-    await db.execute(statement, [userId]);
-}
 
 module.exports= {
     saveValidationCode,

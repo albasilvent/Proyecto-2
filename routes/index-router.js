@@ -1,6 +1,4 @@
-//Todas las rutas (required)
-//Usamos Router
-//usamos las rutas de users y las rutas de post
+//Todas las rutas en un unico index
 const { Router } = require("express");
 const commentsRouter = require("./comments-router.js");
 const likesRouter = require("./likes-router.js");

@@ -19,6 +19,7 @@ function emailNotValidated() {
         message: "El email no ha sido validado",
     };
 }
+
 //notAuthenticated
 //Funcion si el usuario no esta autenticado
 function notAuthenticated() {
@@ -28,6 +29,7 @@ function notAuthenticated() {
         message: "Debe enviar el token en el header 'Authorization'",
     };
 }
+
 //unathorizedUser
 //Funcion si el usuario no esta autorizado
 function unauthorizedUser() {
@@ -37,6 +39,7 @@ function unauthorizedUser() {
         message: "El usuario no está autorizado para hacer esta acción",
     };
 }
+
 //didNotAcceptTOS
 //Funcion si el usuario no acepto las TOS
 function didNotAcceptTOS() {
@@ -47,6 +50,7 @@ function didNotAcceptTOS() {
             "El usuario debe aceptar los términos y condiciones para registrarse",
     };
 }
+
 //notFound
 //Eror 404
 function notFound() {
@@ -56,6 +60,7 @@ function notFound() {
         message: "El recurso no existe",
     };
 }
+
 //emailAlreadyRegistered
 //Funcion si el email ya esta registrado
 function emailAlreadyRegistered() {
@@ -65,6 +70,7 @@ function emailAlreadyRegistered() {
         message: "El email ya está registrado",
     };
 }
+
 //invalidaValidationCode
 //Funcion si el codigo no es valido
 function invalidValidationCode() {
@@ -75,6 +81,8 @@ function invalidValidationCode() {
     };
 }
 
+//sendError
+//Funcion que manda un error
 function sendError(res, err) {
     res.status(err.status ?? 500).json({
         success: false,
@@ -85,6 +93,7 @@ function sendError(res, err) {
     });
 }
 
+//handleAsyncError
 function handleAsyncError(controllerFn) {
     return async ( req, res, next) => {
         try {

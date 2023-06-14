@@ -1,8 +1,7 @@
-// Crear todas las tablas en una funcion.
-// function creartablas(pool){
-// todas las pool.query pool.query
+// Crear todas las tablas 
 
 async function createTables(pool) {
+  //users
     await pool.query(`
       CREATE TABLE users(
           id VARCHAR(100) PRIMARY KEY,
@@ -18,6 +17,7 @@ async function createTables(pool) {
           admin BOOL DEFAULT false
       )`);
 
+    //posts
     await pool.query(`
       CREATE TABLE posts(
           id VARCHAR(100) PRIMARY KEY,
@@ -31,6 +31,7 @@ async function createTables(pool) {
           FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
       )`);
 
+    //likes
     await pool.query(`
       CREATE TABLE post_likes(
           id VARCHAR(100) PRIMARY KEY,
@@ -40,6 +41,7 @@ async function createTables(pool) {
           FOREIGN KEY (postId) REFERENCES posts(id) ON DELETE CASCADE
       )`);
 
+    //comments
     await pool.query(`
       CREATE TABLE post_comments(
           id VARCHAR(100) PRIMARY KEY,
@@ -51,6 +53,7 @@ async function createTables(pool) {
           FOREIGN KEY (postId) REFERENCES posts(id) ON DELETE CASCADE
       )`);
 
+    //validation-codes
     await pool.query(`
       CREATE TABLE validation_codes(
           id VARCHAR(100) PRIMARY KEY,

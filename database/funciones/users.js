@@ -2,6 +2,8 @@ const { getConnection } = require("../connection.js");
 
 const db = getConnection();
 
+//Save user
+//Funcion que guarda un usuario
 async function saveUser(user) {
     const statement = `
     INSERT INTO users(id,name,surname1,surname2,email,password,birthDate,country,acceptedTOS,emailValidated)
@@ -24,7 +26,6 @@ async function saveUser(user) {
 
 //getUserByEmail
 //Funcion que devuelve el user segun el email
-
 async function getUserByEmail(email) {
     const statement = `
       SELECT id,name,email,emailValidated
@@ -37,7 +38,7 @@ async function getUserByEmail(email) {
 }
 
 //getUserById
-//Funcion que devuelve los posts segun la id
+//Funcion que devuelve los posts segun la id. La diferencia es que enseña el post, la otra solo muestra las fotos
 // async function getUserById(userId) {
 //     const userStatement = `
 //       SELECT users.name, COUNT(posts.id) AS postCount
@@ -68,7 +69,9 @@ async function getUserByEmail(email) {
   
 //     return user;
 //   }
-  
+
+//getUserByID
+//Funcion que devuelve el nombre de usuario y su galeria
 async function getUserById(userId) {
     const userStatement = `
       SELECT users.name, COUNT(posts.id) AS postCount
@@ -104,7 +107,8 @@ async function getUserById(userId) {
     return user;
   }
   
-
+//getPassword
+//Funcion que devuelve la contraseña
 async function getPassword(email) {
     const statement = `
       SELECT password
@@ -114,13 +118,6 @@ async function getPassword(email) {
     const [rows] = await db.execute(statement, [email]);
 
     return rows[0];
-}
-
-async function getAllUsers() {
-    const statement = `SELECT id,name,surname1,surname2,email,birthDate,country
-    FROM users`;
-    const [rows] = await db.execute(statement);
-    return rows;
 }
 
 //updateUsers
@@ -145,6 +142,5 @@ module.exports = {
     getUserByEmail,
     getUserById,
     getPassword,
-    getAllUsers,
     updateUser,
 };

@@ -1,21 +1,18 @@
-//addComment y addPhoto
-//Funcion que compruebe si un post existe.
-//Si no existe salta error
-//SI existe crea un nuevo comentario y lo guarda en la base de datos
-//Aqui PAblo puso add photo pero como nuestro post es en si una foto, no se como hacer
 const { generateUUID } = require("../services/crypto");
 const { saveComment } = require("../database/funciones/comment");
 const { getPostById, savePost } = require("../database/funciones/post");
-const { notFound, unauthorizedUser } = require("../services/errors");
+const { notFound } = require("../services/errors");
 const { processUploadedPostPhoto } = require("../services/images");
 
+//addPost
+//Funcion que añade un post
 async function addPost(currentUserId, postPayload) {
     const post = {
         title: postPayload.title,
         description: postPayload.description,
-        photo1: postPayload.photo1,
-        photo2: postPayload.photo2,
-        photo3: postPayload.photo3,
+        photo1: await processUploadedPostPhoto(currentUserId, postPayload.photo1),
+        photo2: await processUploadedPostPhoto(currentUserId, postPayload.photo2),
+        photo3: await processUploadedPostPhoto(currentUserId, postPayload.photo3),
         userId: currentUserId,
         id: generateUUID(),
     };
@@ -23,6 +20,8 @@ async function addPost(currentUserId, postPayload) {
     await savePost(post);
 }
 
+//addComment
+//Funcion que añade un comentario
 async function addComment(postId, currentUserId, commentPayload) {
     const post = await getPostById(postId);
 
@@ -38,29 +37,6 @@ async function addComment(postId, currentUserId, commentPayload) {
     };
     await saveComment(comment);
 }
-
-// Función para añadir fotos. Misma sintaxis que la función anterior.
-
-// async function addPhoto(postId, userId, photo) {
-//     const post = await getPostById(postId);
-
-//     if (!post) {
-//         notFound();
-//     }
-
-//     if (post.userId != userId) {
-//         unauthorizedUser();
-//     }
-
-//     const url = await processUploadedPostPhoto(postId, id, photo);
-
-//     const newPhoto = {
-//         id: generateUUID(),
-//         postId: postId,
-//         imgURL: url,
-//     };
-//     await savePhoto(newPhoto);
-// }
 
 module.exports = {
     addPost,

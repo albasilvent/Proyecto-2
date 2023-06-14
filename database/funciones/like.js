@@ -44,14 +44,6 @@ async function likesCountPost(postId) {
     return rows[0].likes;
 }
 
-async function likeExists(postId, userId) {
-    const statement = `
-    SELECT * FROM post_likes
-    WHERE postId = ? and userId = ?
-    `;
-    const [rows] = await db.execute(statement, [postId, userId]);
-    return !!rows[0];
-  }
 
 
 module.exports= {
@@ -59,5 +51,4 @@ module.exports= {
     getLike,
     deleteLikeByUserId,
     likesCountPost,
-    likeExists
 }

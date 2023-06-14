@@ -6,12 +6,7 @@ const { updateUser, getUserByEmail} = require("../database/funciones/users");
 const { getPostById } = require("../database/funciones/post");
 const { notFound, unauthorizedUser } = require("../services/errors");
 
-//EDITAR POSTS
-//Funcion que obtiene el post segun su id (db-funciones GETPOSTBYID)
-//si el post no existe, lanza error 404
-// SI el id del usuario del post no coincide con el id del usuario,lanza error
-//Si esta todo correcto, edita el post (titulo, foto y descripcion)
-
+//Editar los datos de usuario
 async function editUser(userEmail, userPayload) {
     const user = await getUserByEmail(userEmail);
     if (!user) {
@@ -33,8 +28,7 @@ async function editUser(userEmail, userPayload) {
     await updateUser(updatedUser);
 }
 
-
-
+//Editar un post
 async function editPost(postId, userId, postPayload) {
     const post = await getPostById(postId);
     if (!post) {
@@ -56,12 +50,7 @@ async function editPost(postId, userId, postPayload) {
     await updatePost(updatedPost);
 }
 
-//EDITAR COMENTARIOS
-//Funcion que obtiene el comentario segun el ID (db-funciones GETCOMMENTBYID)
-//Si el comentario no existe, salta error
-//Si el comentario existe, Compara el id del token (userId) con el userID del comentario
-// Si no son iguales, tirar un error
-
+//Editar un comentario
 async function editComment(commentId, userId, commentPayload) {
     const comment = await getCommentById(commentId);
     if (!comment) {

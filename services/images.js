@@ -4,53 +4,41 @@ const fs = require("fs/promises");
 const sharp = require("sharp");
 const {generateUUID} = require("../services/crypto");
 
-//processUploadedPostPhoto
-//Funcion que guarda el archivo en el disco
-async function processUploadedPostPhoto(postPayload) {
-const directory = path.join(__dirname, "../public/photos", postPayload.userId);  //Directorio donde guardamos la foto
-await fs.mkdir(directory, {  //Asegurarse de que el directorio exista
-    recursive: true,
-  });
-//Ponerle un fileName, que será el nombre final del archivo nuevo
-const fileName = generateUUID() + ".webp";
-//Crear la ruta absoluta al archivo
-const filePath  = path.join(directory, fileName);
-//Procesar el archivo (sharp) y escribirlo
-const sharpProcess = await sharp(postPayload.photo1);
+//processUploadedPostPhoto.
+async function processUploadedPostPhoto(userId, postPayload) {
+  const directory = path.join(__dirname, "../public/photos", userId); // Directorio donde se guarda la foto
+
+  try {
+    await fs.mkdir(directory, { recursive: true }); // Asegurarse de que el directorio exista
+
+    // Establecer un fileName, que será el nombre final del archivo nuevo
+    const fileName = generateUUID() + ".webp";
+
+    // Crear la ruta absoluta al archivo
+    const filePath = path.join(directory, fileName);
+
+    // Procesar el archivo con sharp y guardarlo en disco
+    const sharpProcess = sharp(postPayload.photo1);
     const metadata = await sharpProcess.metadata();
 
     if (metadata.width > 500) {
       sharpProcess.resize(500);
     }
 
-    sharpProcess.webp().toFile(filePath);
-//generar URL del archivo para express
-const fileURL = `/photos/${postPayload.userId}/${fileName}`;
+    await sharpProcess.webp().toFile(filePath);
 
-
-// if (postPayload.photo2){
-//   const fileName2 = postPayload.photo2 + ".webp";
-//   const filePath2 = path.join(directory, fileName2);
-// }
-
-// if (postPayload.photo2){
-//   const fileName3 = postPayload.photo3 + ".webp";
-//   const filePath3 = path.join(directory, fileName3);
-// }
-
-return fileURL;
-}
-
-//Funcion para borrar fotos
-async function deletePhoto(dbPhoto) {
-  const directory = path.join(__dirname, "../public");
-  
-  const filePath = path.join(directory, dbPhoto.imageURL);
-  await fs.unlink(filePath);
+    // Generar la URL del archivo para Express
+    const fileURL = `/photos/${userId}/${fileName}`;
+    
+    return fileURL;
+  } catch (error) {
+    // Manejo de errores si ocurre algún problema durante el proceso
+    console.error("Error al procesar la foto:", error);
+    throw error;
+  }
 }
 
 
 module.exports= {
   processUploadedPostPhoto,
-  deletePhoto
 };

@@ -5,39 +5,38 @@ const { addComment } = require("../use-cases/add.js");
 const { editComment } = require("../use-cases/edit.js");
 const { removeComment } = require("../use-cases/remove.js");
 const { sendResponse } = require("../services/response.js");
+const { validateBody } = require("../middlewares/validate-body.js");
+const commentPayload = require("../validators/comment.js")
 const router = Router();
 
-// post "/posts/:id/comments"
-// Agregar un nuevo comentario al post
-//FUNCIONA
 
+// Agregar un nuevo comentario al post
 router.post(
     "/posts/:id/comments",
     authGuard,
     json(),
+    validateBody(commentPayload),
     handleAsyncError(async (req, res) => {
         //Agregar un nuevo comentario al post con id req.params.id
         await addComment(req.params.id, req.currentUser.id, req.body);
         sendResponse(res, undefined, 201);
     })
 );
-// patch "/posts/:id/comments/:commentId"
+
 // Modificar el comentario
-//FUNCIONA
 router.patch(
     "/posts/:id/comments/:commentId",
     authGuard,
     json(),
+    validateBody(commentPayload),
     handleAsyncError(async (req, res) => {
         //Modificar el comentario con id req.params.commentId en el post con id req.params.id
         await editComment(req.params.commentId, req.currentUser.id, req.body);
         sendResponse(res);
     })
 );
-// delete  "/posts/:id/comments/:commentId"
-// Borrar el comentario
-//FUNCIONA
 
+// Borrar el comentario
 router.delete(
     "/posts/:id/comments/:commentId",
     authGuard,

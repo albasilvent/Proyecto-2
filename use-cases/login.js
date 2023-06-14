@@ -4,6 +4,7 @@ const { getPassword } = require("../database/funciones/users");
 const { validatePassword } = require("../services/crypto");
 const { generateJWT } = require("../services/JWT");
 
+//Funcion de login
 async function loginUser(email, plainPassword) {
     //obtengo el usuario que corresponda a ese email.
     const user = await getUserByEmail(email);
@@ -24,7 +25,6 @@ async function loginUser(email, plainPassword) {
     if (!valid) {
         invalidCredentials();
     }
-    //-------- ESTOY SEGURO QUE ESTE USUARIO ES VÁLIDO -------------
     //GENERAR EL TOKEN (JWT)
     const token = generateJWT({
         id: user.id,

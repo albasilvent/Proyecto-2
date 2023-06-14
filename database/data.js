@@ -1,6 +1,7 @@
 const { generateUUID, hashPassword } = require("../services/crypto");
 const { faker } = require("@faker-js/faker");
 
+//Funcion para generar usuarios y posts
 async function generateUsersAndPosts() {
     const users = [];
     const posts = [];
@@ -45,6 +46,7 @@ async function generateUsersAndPosts() {
     return [users, posts];
 }
 
+//Funcion para generar comentarios
 function generateComments(post, users) {
     const numComments = Math.floor(Math.random() * 10) + 1;
     const comments = [];
@@ -63,6 +65,7 @@ function generateComments(post, users) {
     return comments;
 }
 
+//Funcion para generar likes
 function generateLikes(post, users) {
     const numLikes = Math.floor(Math.random() * users.length) + 1;
     const likes = [];
@@ -83,6 +86,8 @@ function generateLikes(post, users) {
 
     return likes;
 }
+
+//Funcion para rellenar la base de datos
 async function generateFakeData(pool) {
     const [users, posts] = await generateUsersAndPosts();
 

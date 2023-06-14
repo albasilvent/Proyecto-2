@@ -2,7 +2,7 @@ const { getConnection } = require("../connection.js");
 
 const db = getConnection();
 
-//save comment (podriamos meterlo en los insert)
+//save comment
 //Funcion que guarda comentarios
 async function saveComment(postComment) {
     const statement = `
@@ -41,17 +41,6 @@ async function getCommentsByPostId(postId) {
     return rows;
 }
 
-//countCommentsByPostId (a esto hay que cambiarle el nombre)
-//Funcion que devuelve el numero de comentarios segun el post
-async function commentsCountPost(postId) {
-    const statement = `
-    SELECT COUNT(*) as comments FROM post_comments
-    WHERE postId = ?
-    `;
-    const [rows] = await db.execute(statement, [postId]);
-    return rows[0].comments;
-}
-
 //updateComment
 //Funcion que edita un comentario
 async function updateComment(commentId, commentPayload) {
@@ -79,7 +68,6 @@ module.exports = {
     saveComment,
     getCommentById,
     getCommentsByPostId,
-    commentsCountPost,
     updateComment,
     deleteComment
 };

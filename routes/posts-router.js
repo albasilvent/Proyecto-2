@@ -1,5 +1,7 @@
 const { Router, json } = require("express");
 const { authGuard } = require("../middlewares/auth-guard.js");
+const { validateBody } = require("../middlewares/validate-body.js");
+const postPayload= require("../validators/add-photo.js")
 const { handleAsyncError } = require("../services/errors");
 const { listPosts } = require("../use-cases/list");
 const { search } = require("../use-cases/search");
@@ -10,12 +12,13 @@ const { viewPost } = require("../use-cases/view-details.js");
 const { sendResponse } = require("../services/response");
 const router = Router();
 
-// post /posts
 //Crear un nuevo post
+//NO FUNCIONA
 router.post(
     "/posts",
     authGuard,
     json(),
+    validateBody(postPayload),
     handleAsyncError(async (req, res) => {
         // Crear un nuevo post
         await addPost(req.currentUser.id, req.body);
@@ -23,7 +26,6 @@ router.post(
     })
 );
 
-// get /posts/:id
 // Obtener un post
 router.get(
     "/posts/:id",
@@ -34,7 +36,6 @@ router.get(
     })
 );
 
-// get /posts
 //Obtener todos los post
 router.get(
     //PROBAR CON POSTS SUBIDOS
@@ -45,8 +46,9 @@ router.get(
         sendResponse(res, posts);
     })
 );
-// get /posts/search
+
 //Obtener todos los post que coincidan con la busqueda
+//NO FUNCIONA
 router.get(
     "/posts/search",
     handleAsyncError(async (req, res) => {
@@ -55,19 +57,20 @@ router.get(
         sendResponse(res, posts);
     })
 );
-// patch /posts/:id
+
 // Editar el post
 router.patch(
     "/posts/:id",
     authGuard,
     json(),
+    validateBody(postPayload),
     handleAsyncError(async (req, res) => {
         // Editar el post con id req.params.id
         await editPost(req.params.id, req.currentUser.id, req.body);
         sendResponse(res);
     })
 );
-// delete /posts/:id
+
 // borrar un post
 router.delete(
     "/posts/:id",
