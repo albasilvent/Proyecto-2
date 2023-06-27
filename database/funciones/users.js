@@ -123,8 +123,6 @@ async function getPassword(email) {
 //updateUsers
 //Funcion para modificar un user
 async function updateUser(user) {
-    console.log(user);
-
     const statement = `
       UPDATE users
       SET name = ?, surname1 = ?, surname2 = ?, country = ?

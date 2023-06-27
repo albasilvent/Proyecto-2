@@ -40,11 +40,11 @@ async function editPost(postId, userId, postPayload) {
     }
 
     const updatedPost = {
-        ...post,
-        title: postPayload.title,
-        description: postPayload.description,
-        photo2: postPayload.photo2,
-        photo3: postPayload.photo3,
+        id: postId,
+        title: postPayload.title || post.title,
+        description: postPayload.description || post.description,
+        photo2: postPayload.photo2 || post.photo2,
+        photo3: postPayload.photo3 || post.photo3,
     };
 
     await updatePost(updatedPost);

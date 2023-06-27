@@ -75,7 +75,7 @@ async function updatePost(post) {
     SET title = ?, description = ?, photo2 = ?, photo3 = ?
     WHERE id = ?
     `;
-    await db.execute(statement, [post.title, post.description, post.id, post.photo2, post.photo3]); // Para las fotos 2 y 3, pasar valor nulo para borrarlas
+    await db.execute(statement, [post.title, post.description, post.photo2, post.photo3, post.id,]); // Para las fotos 2 y 3, pasar valor nulo para borrarlas
 }
 
 
