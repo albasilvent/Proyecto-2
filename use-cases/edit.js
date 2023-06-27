@@ -3,7 +3,7 @@ const {
     updateComment,
 } = require("../database/funciones/comment");
 const { updateUser, getUserById } = require("../database/funciones/users");
-const { getPostById } = require("../database/funciones/post");
+const { getPostById, updatePost } = require("../database/funciones/post");
 const { notFound, unauthorizedUser } = require("../services/errors");
 
 //Editar los datos de usuario

@@ -3,6 +3,7 @@ const fileUpload = require("express-fileupload");
 const { authGuard } = require("../middlewares/auth-guard.js");
 const { validateBody } = require("../middlewares/validate-body.js");
 const postPayload = require("../validators/add-post.js");
+const editPostPayload= require("../validators/edit-post.js")
 const { handleAsyncError } = require("../services/errors");
 const { listPosts } = require("../use-cases/list");
 const { search } = require("../use-cases/search");
@@ -63,7 +64,7 @@ router.patch(
     "/posts/:id",
     authGuard,
     fileUpload(),
-    validateBody(postPayload),
+    validateBody(editPostPayload),
     handleAsyncError(async (req, res) => {
         // Editar el post con id req.params.id
         await editPost(req.params.id, req.currentUser.id, req.body);
