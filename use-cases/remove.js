@@ -4,7 +4,6 @@ const {
 } = require("../database/funciones/comment");
 const { notFound, unauthorizedUser } = require("../services/errors");
 const { getPostById } = require("../database/funciones/post");
-const { post } = require("../routes/posts-router");
 const { deletePost } = require("../database/funciones/post");
 
 //Funcion para eliminar un comentario
