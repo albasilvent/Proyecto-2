@@ -5,6 +5,7 @@ const { createPool } = require("./connection.js");
 const { createTables } = require("./tables.js");
 const { generateFakeData } = require("./data.js");
 const {insertAdminUsers} = require("./admin.js");
+const { deletePublic } = require("./delete-public.js");
 
 //Variables de ambiente para insertar el admin
 const DATABASE_NAME = process.env.MYSQL_DATABASE;
@@ -30,6 +31,8 @@ async function initDB() {
   await insertAdminUsers(pool,DB_ADMIN_NAME,DB_ADMIN_SURNAME1,DB_ADMIN_SURNAME2,DB_ADMIN_EMAIL,DB_ADMIN_PASSWORD,DB_ADMIN_DATE)
   //Rellenamos la base de datos
   await generateFakeData(pool);
+
+  await deletePublic();
 
   //Cerramos la conexion
   await pool.end();

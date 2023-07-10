@@ -16,7 +16,7 @@ app.use(express.static(staticDirectory));
 
 app.use(
     cors({
-        origin: ["https://photoDrop.es", "http://localhost:5500"],
+        origin: ["https://photoDrop.es", "http://localhost:5000"],
     })
 );
 
